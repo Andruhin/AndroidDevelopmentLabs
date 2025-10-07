@@ -8,54 +8,39 @@
     android:layout_height="match_parent"
     >
 
-  <ImageView
-      android:id="@+id/image"
-      android:layout_width="200dp"
-      android:layout_height="200dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      android:layout_marginTop="24dp"
-      />
-
   <TextView
-      android:id="@+id/text_view"
+      android:id="@+id/title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:background="#aa0000"
-      android:text="Hello World!"
-      android:textColor="#ffffff"
-      android:textSize="30sp"
-      android:layout_marginTop="24dp"
-      android:padding="12dp"
-      app:layout_constraintEnd_toEndOf="parent"
+      android:text="List of tasks:"
+      app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/image"
-      />
+      android:textSize="18sp"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="16dp"/>
 
-  <EditText
-      android:id="@+id/input_field"
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/list"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="0dp"
       android:layout_margin="16dp"
-      android:hint="Input text here"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@id/text_view"
+      app:layout_constraintTop_toBottomOf="@id/title"
+      app:layout_constraintBottom_toTopOf="@id/btn_add"
+      android:background="@color/light_grey"
+      tools:listitem="@layout/list_item_task"
       />
-
 
   <Button
-      android:id="@+id/btn_ok"
+      android:id="@+id/btn_add"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:padding="16dp"
-      android:text="Apply"
+      android:text="Add new task"
       android:textSize="25sp"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/text_view"
+      android:layout_marginBottom="16dp"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

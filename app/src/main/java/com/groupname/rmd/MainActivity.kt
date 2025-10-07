@@ -10,73 +10,58 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
-
 
   val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
   { result ->
     if (result.resultCode == Activity.RESULT_OK){
-      val text = result.data?.getStringExtra("second_key")
-      val textView = findViewById<TextView>(R.id.text_view)
-      textView.text = text
+      val task = result.data?.getStringExtra("key_task")
+      if (!task.isNullOrBlank()) {
+        taskList.add(task)
+        adapter.setData(taskList)
+      }
     }
   }
+
+  private val taskList = mutableListOf<String>()
+  private var list: RecyclerView? = null
+  private val adapter: ListAdapter = ListAdapter()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    val image = findViewById<ImageView>(R.id.image)
-    val text = findViewById<TextView>(R.id.text_view)
-    val btn = findViewById<Button>(R.id.btn_ok)
-    val editView = findViewById<EditText>(R.id.input_field)
+    list = findViewById<RecyclerView>(R.id.list)
+    val layoutManager = LinearLayoutManager(this)
+    list?.layoutManager = layoutManager
+    list?.adapter = adapter
 
-    btn.setOnClickListener {
-      val text = editView.text.toString()
-      launchSecondActivityForResult(text)
+    // Додаємо розділювач між елементами
+    val divider = DividerItemDecoration(this,  layoutManager.orientation)
+    list?.addItemDecoration(divider)
+
+    val btnAddTask = findViewById<Button>(R.id.btn_add)
+
+    btnAddTask.setOnClickListener {
+      launchSecondActivityForResult()
     }
-
-    Toast.makeText(this, "onCreate MainActivity", Toast.LENGTH_SHORT).show()
   }
 
   //Launch without waiting for result
   private fun launchSecondActivity(text: String){
     val intent = Intent(this, SecondActivity::class.java)
     intent.putExtra("key_text", text)
-    intent.putExtra("key_text", text)
     startActivity(intent)
   }
 
   //Launch with waiting for result
-  private fun launchSecondActivityForResult(text: String){
+  private fun launchSecondActivityForResult(){
     val intent = Intent(this, SecondActivity::class.java)
-    intent.putExtra("key_text", text)
    launcher.launch(intent)
   }
 
-  override fun onStart() {
-    super.onStart()
-    Toast.makeText(this, "onStart MainActivity", Toast.LENGTH_SHORT).show()
-  }
-
-  override fun onResume() {
-    super.onResume()
-    Toast.makeText(this, "onResume MainActivity", Toast.LENGTH_SHORT).show()
-  }
-
-  override fun onPause() {
-    super.onPause()
-    Toast.makeText(this, "onPause MainActivity", Toast.LENGTH_SHORT).show()
-  }
-
-  override fun onStop() {
-    super.onStop()
-    Toast.makeText(this, "onStop MainActivity", Toast.LENGTH_SHORT).show()
-  }
-
-  override fun onDestroy() {
-    super.onDestroy()
-    Toast.makeText(this, "onDestroy MainActivity", Toast.LENGTH_SHORT).show()
-  }
 }
