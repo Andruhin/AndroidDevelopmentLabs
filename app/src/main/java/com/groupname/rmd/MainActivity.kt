@@ -3,6 +3,7 @@ package com.groupname.rmd
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import java.util.Date
+import java.util.GregorianCalendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +25,7 @@ class MainActivity : AppCompatActivity() {
       val task = result.data?.getStringExtra("key_task")
       if (!task.isNullOrBlank()) {
         taskList.add(task)
+        storage.saveTaskList(taskList)
         adapter.setData(taskList)
       }
     }
@@ -31,6 +35,8 @@ class MainActivity : AppCompatActivity() {
   private var list: RecyclerView? = null
   private val adapter: ListAdapter = ListAdapter()
 
+  private lateinit var storage: Storage
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -39,6 +45,16 @@ class MainActivity : AppCompatActivity() {
     val layoutManager = LinearLayoutManager(this)
     list?.layoutManager = layoutManager
     list?.adapter = adapter
+
+    storage = Storage(this)
+    taskList.addAll(storage.getTaskList())
+    adapter.setData(taskList)
+
+    //Example how to store objects in shared preferences
+    val task = Task(1,"description", GregorianCalendar.getInstance().time.toString())
+    storage.saveTask(task)
+    val task2 = storage.getTask()
+    Log.d("task", task2.toString())
 
     // Додаємо розділювач між елементами
     val divider = DividerItemDecoration(this,  layoutManager.orientation)
