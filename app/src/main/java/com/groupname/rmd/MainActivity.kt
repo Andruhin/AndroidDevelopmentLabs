@@ -14,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.groupname.rmd.model.Currency
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.Date
 import java.util.GregorianCalendar
 
@@ -41,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
+    loadCurrencyRate()
+
     list = findViewById<RecyclerView>(R.id.list)
     val layoutManager = LinearLayoutManager(this)
     list?.layoutManager = layoutManager
@@ -62,6 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     val btnAddTask = findViewById<Button>(R.id.btn_add)
 
+
     btnAddTask.setOnClickListener {
       launchSecondActivityForResult()
     }
@@ -78,6 +85,45 @@ class MainActivity : AppCompatActivity() {
   private fun launchSecondActivityForResult(){
     val intent = Intent(this, SecondActivity::class.java)
    launcher.launch(intent)
+  }
+
+  private fun loadCurrencyRate(){
+    val request = RetrofitClient.apiService.getCurrencyRate()
+    request.enqueue(object : Callback<List<Currency>>{
+      override fun onResponse(
+        call: Call<List<Currency>?>,
+        response: Response<List<Currency>?>
+      ) {
+        if (response.isSuccessful && response.body() != null){
+           val list = response.body()
+          val euroCurrency = list?.find { it.currency == "EUR" }
+
+          if (euroCurrency != null){
+            runOnUiThread {
+              val field = findViewById<TextView>(R.id.currency)
+              val buyRate = euroCurrency.buyRate.toDoubleOrNull()
+              val saleRate = euroCurrency.saleRate.toDoubleOrNull()
+
+              field.text = "${euroCurrency.currency} ${buyRate}/${saleRate}"
+            }
+          }
+        } else {
+          runOnUiThread {
+            Toast.makeText(this@MainActivity, "Response is unsuccessful", Toast.LENGTH_SHORT).show()
+          }
+        }
+      }
+
+      override fun onFailure(
+        call: Call<List<Currency>?>,
+        t: Throwable
+      ) {
+        runOnUiThread {
+          Toast.makeText(this@MainActivity, t.message, Toast.LENGTH_SHORT).show()
+        }
+      }
+    })
+
   }
 
 }
