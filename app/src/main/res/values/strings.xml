@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">RMD</string>
+  <string name="MAPS_API_KEY">PUT KEY HERE</string>
 </resources>

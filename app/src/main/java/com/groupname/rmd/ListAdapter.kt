@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
 
   /** Внутрішня колекція обєктів - список з текстом задач **/
-  private val taskList = mutableListOf<String>()
+  private val taskList = mutableListOf<Task>()
 
   /** Метод який записує список задач і запускає їх відмалювання**/
-  fun setData(list: List<String>){
+  fun setData(list: List<Task>){
     taskList.clear()
     taskList.addAll(list)
     notifyDataSetChanged()
@@ -47,9 +47,11 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
   class TaskViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
     private val taskView: TextView? = view.findViewById<TextView>(R.id.task_name)
+    private val addressView: TextView? = view.findViewById<TextView>(R.id.task_address)
 
-    fun render(task: String?){
-      taskView?.text = task
+    fun render(task: Task?){
+      taskView?.text = task?.description
+      addressView?.text = task?.address
     }
   }
 

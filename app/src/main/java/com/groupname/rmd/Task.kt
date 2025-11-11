@@ -1,9 +1,13 @@
 package com.groupname.rmd
 
-import java.util.Date
+import android.os.Parcelable
+import com.google.android.gms.maps.model.LatLng
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Task(
-  val id: Int,
+  val id: String,
   val description: String,
-  val dateTime: String
-)
+  val address: String,
+  val latLng: LatLng?
+): Parcelable

@@ -2,6 +2,7 @@ package com.groupname.rmd
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -26,16 +27,18 @@ class MainActivity : AppCompatActivity() {
   val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
   { result ->
     if (result.resultCode == Activity.RESULT_OK){
-      val task = result.data?.getStringExtra("key_task")
-      if (!task.isNullOrBlank()) {
-        taskList.add(task)
-        storage.saveTaskList(taskList)
-        adapter.setData(taskList)
+      val task = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        result.data?.getParcelableExtra(SecondActivity.KEY_TASK, Task::class.java)
+      } else {
+        result.data?.getParcelableExtra<Task>(SecondActivity.KEY_TASK)
+      }
+      if (task != null) {
+        storage.addTask(task)
+        adapter.setData(storage.getTasks())
       }
     }
   }
 
-  private val taskList = mutableListOf<String>()
   private var list: RecyclerView? = null
   private val adapter: ListAdapter = ListAdapter()
 
@@ -53,21 +56,13 @@ class MainActivity : AppCompatActivity() {
     list?.adapter = adapter
 
     storage = Storage(this)
-    taskList.addAll(storage.getTaskList())
-    adapter.setData(taskList)
-
-    //Example how to store objects in shared preferences
-    val task = Task(1,"description", GregorianCalendar.getInstance().time.toString())
-    storage.saveTask(task)
-    val task2 = storage.getTask()
-    Log.d("task", task2.toString())
+    adapter.setData(storage.getTasks())
 
     // Додаємо розділювач між елементами
     val divider = DividerItemDecoration(this,  layoutManager.orientation)
     list?.addItemDecoration(divider)
 
     val btnAddTask = findViewById<Button>(R.id.btn_add)
-
 
     btnAddTask.setOnClickListener {
       launchSecondActivityForResult()

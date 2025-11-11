@@ -5,33 +5,40 @@ import com.google.gson.Gson
 
 class Storage(val context: Context) {
 
+  private val key = "key_data"
   private val sharedPreferences =
     context.getSharedPreferences("data", Context.MODE_PRIVATE)
 
-  fun saveTaskList(tasks: List<String>){
+  private val data: Data
+
+  init {
+    data = loadData()
+  }
+
+  private fun saveData(data: Data){
+    val gson = Gson()
+    val jsonTask = gson.toJson(data)
     sharedPreferences.edit()
-      .putStringSet("key_tasks", tasks.toSet())
+      .putString(key, jsonTask)
       .apply()
   }
 
-  fun getTaskList(): List<String> {
-    return sharedPreferences.getStringSet("key_tasks", emptySet<String>())
-      .orEmpty()
-      .toList()
-  }
-
-  fun saveTask(task: Task){
+  private fun loadData(): Data {
     val gson = Gson()
-    val jsonTask = gson.toJson(task)
-    sharedPreferences.edit()
-      .putString("key_task", jsonTask)
-      .apply()
+    val jsonString = sharedPreferences.getString(key, null)
+    if (jsonString.isNullOrBlank()){
+      return Data()
+    } else {
+     return gson.fromJson<Data>(jsonString, Data::class.java)
+    }
   }
 
-  fun getTask(): Task? {
-    val gson = Gson()
-    val jsonString = sharedPreferences.getString("key_task", null)
-    return gson.fromJson<Task>(jsonString, Task::class.java)
+  fun addTask(task: Task){
+    data.tasks.add(task)
+    saveData(data)
   }
 
+  fun getTasks(): List<Task> {
+    return data.tasks
+  }
 }
