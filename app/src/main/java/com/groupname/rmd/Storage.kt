@@ -41,4 +41,14 @@ class Storage(val context: Context) {
   fun getTasks(): List<Task> {
     return data.tasks
   }
+
+  fun deleteItemById(id: String){
+    data.tasks.removeIf { it.id == id }
+    saveData(data)
+  }
+
+  fun getItemById(id: String): Task? {
+    return data.tasks.find { it.id == id }
+  }
+
 }

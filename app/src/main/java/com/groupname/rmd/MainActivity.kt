@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.groupname.rmd.SecondActivity.Companion.KEY_ID_EDIT_TASK
 import com.groupname.rmd.model.Currency
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,7 +23,7 @@ import retrofit2.Response
 import java.util.Date
 import java.util.GregorianCalendar
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ListItemListener {
 
   val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
   { result ->
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
   }
 
   private var list: RecyclerView? = null
-  private val adapter: ListAdapter = ListAdapter()
+  private val adapter: ListAdapter = ListAdapter(this)
 
   private lateinit var storage: Storage
 
@@ -119,6 +120,17 @@ class MainActivity : AppCompatActivity() {
       }
     })
 
+  }
+
+  override fun onItemClick(id: String) {
+    val intent = Intent(this, SecondActivity::class.java)
+    intent.putExtra(KEY_ID_EDIT_TASK, id)
+    startActivity(intent)
+  }
+
+  override fun onItemDelete(id: String) {
+    storage.deleteItemById(id)
+    adapter.setData(storage.getTasks())
   }
 
 }

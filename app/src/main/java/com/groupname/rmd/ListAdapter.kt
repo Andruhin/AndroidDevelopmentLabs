@@ -3,11 +3,12 @@ package com.groupname.rmd
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 /** Клас адаптера, який вміє малювати на списку **/
-class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
+class ListAdapter(val listener: ListItemListener): RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
 
   /** Внутрішня колекція обєктів - список з текстом задач **/
   private val taskList = mutableListOf<Task>()
@@ -26,7 +27,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
   ): TaskViewHolder {
     val view = LayoutInflater.from(parent.context)
       .inflate(R.layout.list_item_task, parent, false)
-    return TaskViewHolder(view)
+    return TaskViewHolder(view, listener)
   }
 
   /** Відмалювання кожного елемента відповідно до позиції**/
@@ -44,14 +45,21 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
   }
 
   /** Клас контейнера одного елемента на екрані який вміє відмалювати один елемент **/
-  class TaskViewHolder(val view: View): RecyclerView.ViewHolder(view){
+  class TaskViewHolder(val view: View, val listener: ListItemListener): RecyclerView.ViewHolder(view){
 
     private val taskView: TextView? = view.findViewById<TextView>(R.id.task_name)
     private val addressView: TextView? = view.findViewById<TextView>(R.id.task_address)
+    private val deleteIcon: ImageView? = view.findViewById<ImageView>(R.id.delete)
 
     fun render(task: Task?){
       taskView?.text = task?.description
       addressView?.text = task?.address
+      deleteIcon?.setOnClickListener {
+        listener.onItemDelete(task?.id.orEmpty())
+      }
+      view.setOnClickListener {
+        listener.onItemClick(task?.id.orEmpty())
+      }
     }
   }
 

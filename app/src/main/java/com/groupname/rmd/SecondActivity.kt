@@ -24,11 +24,12 @@ class SecondActivity : AppCompatActivity(), OnMapReadyCallback {
   private lateinit var addressesField: EditText
   private lateinit var taskField: EditText
   private var latLng: LatLng? = null
+  private lateinit var storage: Storage
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_second)
-
+    storage = Storage(this)
     val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
     mapFragment.getMapAsync(this)
     taskField = findViewById<EditText>(R.id.input_field)
@@ -54,8 +55,22 @@ class SecondActivity : AppCompatActivity(), OnMapReadyCallback {
 
   override fun onMapReady(googleMap: GoogleMap) {
     map = googleMap
-    // Встановити початкову позицію
-    val defaultLocation = LatLng(48.922488, 24.710241)
+
+    val id = intent.getStringExtra(KEY_ID_EDIT_TASK)
+
+    val defaultLocation = if (id != null){
+      val task = storage.getItemById(id)
+      val latLng = task?.latLng ?: LatLng(48.922488, 24.710241)
+      map.addMarker(
+        MarkerOptions().position(latLng)
+      )
+      addressesField.setText(task?.address)
+      taskField.setText(task?.description)
+    latLng
+    } else {
+      LatLng(48.922488, 24.710241)
+    }
+
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 14f))
 
     // Add marker on click
@@ -94,7 +109,8 @@ class SecondActivity : AppCompatActivity(), OnMapReadyCallback {
     addressesField.setText(address.getAddressLine(0))
   }
 
-  companion object{
+  companion object {
     const val KEY_TASK = "key_task"
+    const val KEY_ID_EDIT_TASK = "key_id_edit_task"
   }
 }
