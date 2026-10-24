@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity() {
   private fun launchSecondActivity(text: String){
     val intent = Intent(this, SecondActivity::class.java)
     intent.putExtra("key_text", text)
-    intent.putExtra("key_text", text)
     startActivity(intent)
   }
 
