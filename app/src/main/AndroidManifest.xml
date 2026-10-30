@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RMD" >
         <activity
-            android:name=".SecondActivity"
-            android:exported="false" />
+            android:name=".AddTaskActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:exported="true" >

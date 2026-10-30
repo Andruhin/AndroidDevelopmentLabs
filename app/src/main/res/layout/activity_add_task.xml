@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".AddTaskActivity">
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
+      android:text="@string/add_task_title"
+      android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/til_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
+      android:hint="@string/task_name_hint">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences"
+        android:maxLines="1" />
+  </com.google.android.material.textfield.TextInputLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
+      android:text="@string/category_label"
+      android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+  <Spinner
+      android:id="@+id/spinner_category"
+      android:layout_width="match_parent"
+      android:layout_height="48dp"
+      android:layout_marginStart="16dp"
+      android:entries="@array/categories" />
+</LinearLayout>
+  <TextView
+      android:id="@+id/tv_priority_label"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="8dp"
+      android:text="@string/priority_label"
+      android:textAppearance="?attr/textAppearanceTitleMedium" />
+
+  <RadioGroup
+      android:id="@+id/rg_priority"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="16dp"
+      android:checkedButton="@+id/rb_medium"
+      android:orientation="horizontal">
+
+    <RadioButton
+        android:id="@+id/rb_low"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/priority_low"
+        android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+    <RadioButton
+        android:id="@+id/rb_medium"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/priority_medium"
+        android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+    <RadioButton
+        android:id="@+id/rb_high"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="@string/priority_high"
+        android:textAppearance="?attr/textAppearanceBodyMedium" />
+  </RadioGroup>
+
+  <CheckBox
+      android:id="@+id/cb_location"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/attach_location"
+      android:textAppearance="?attr/textAppearanceBodyMedium" />
+
+  <TextView
+      android:id="@+id/tv_location_stub"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:layout_marginTop="8dp"
+      android:text="@string/location_stub"
+      android:textAppearance="?attr/textAppearanceBodyMedium"
+      android:visibility="gone" />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_save"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="24dp"
+      android:text="@string/save_task" />
+</LinearLayout>

@@ -2,4 +2,25 @@
 <resources>
   <color name="black">#FF000000</color>
   <color name="white">#FFFFFFFF</color>
+
+  <!-- Material Theme Builder palette (light) -->
+  <color name="md_light_primary">#FF36618E</color>
+  <color name="md_light_on_primary">#FFFFFFFF</color>
+  <color name="md_light_secondary">#FF535F70</color>
+  <color name="md_light_on_secondary">#FFFFFFFF</color>
+  <color name="md_light_surface">#FFF8F9FF</color>
+  <color name="md_light_on_surface">#FF191C20</color>
+
+  <!-- Material Theme Builder palette (dark) -->
+  <color name="md_dark_primary">#FFA0CAFD</color>
+  <color name="md_dark_on_primary">#FF003258</color>
+  <color name="md_dark_secondary">#FFBBC7DB</color>
+  <color name="md_dark_on_secondary">#FF253140</color>
+  <color name="md_dark_surface">#FF101418</color>
+  <color name="md_dark_on_surface">#FFE0E2E8</color>
+
+  <!-- Priority colors -->
+  <color name="priority_low">#FF2E7D32</color>
+  <color name="priority_medium">#FFEF6C00</color>
+  <color name="priority_high">#FFC62828</color>
 </resources>

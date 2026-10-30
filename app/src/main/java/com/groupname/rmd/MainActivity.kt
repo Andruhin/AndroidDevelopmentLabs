@@ -34,22 +34,22 @@ class MainActivity : AppCompatActivity() {
 
     btn.setOnClickListener {
       val text = editView.text.toString()
-      launchSecondActivityForResult(text)
+      launchAddTaskActivityForResult(text)
     }
 
     Toast.makeText(this, "onCreate MainActivity", Toast.LENGTH_SHORT).show()
   }
 
   //Launch without waiting for result
-  private fun launchSecondActivity(text: String){
-    val intent = Intent(this, SecondActivity::class.java)
+  private fun launchAddTaskActivity(text: String){
+    val intent = Intent(this, AddTaskActivity::class.java)
     intent.putExtra("key_text", text)
     startActivity(intent)
   }
 
   //Launch with waiting for result
-  private fun launchSecondActivityForResult(text: String){
-    val intent = Intent(this, SecondActivity::class.java)
+  private fun launchAddTaskActivityForResult(text: String){
+    val intent = Intent(this, AddTaskActivity::class.java)
     intent.putExtra("key_text", text)
    launcher.launch(intent)
   }
