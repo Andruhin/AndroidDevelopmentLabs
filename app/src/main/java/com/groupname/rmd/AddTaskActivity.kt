@@ -3,6 +3,7 @@ package com.groupname.rmd
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import android.widget.RadioGroup
 import android.widget.Spinner
@@ -48,15 +49,20 @@ class AddTaskActivity : AppCompatActivity() {
     val saveButton = findViewById<MaterialButton>(R.id.btn_save)
 
     // Вибір категорії: показуємо Toast з назвою вибраного елемента
-    var spinnerInitialized = false
+//    var spinnerInitialized = false
+    val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, TaskCategories.entries)
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+    categorySpinner.adapter = adapter
+    categorySpinner.setSelection(TaskCategories.Other.ordinal)
+
     categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
       override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         // Spinner викликає слухач один раз при запуску; пропускаємо його,
         // щоб Toast з'являвся лише після вибору користувача
-        if (!spinnerInitialized) {
-          spinnerInitialized = true
-          return
-        }
+//        if (!spinnerInitialized) {
+//          spinnerInitialized = true
+//          return
+//        }
         Toast.makeText(
           this@AddTaskActivity,
           parent.getItemAtPosition(position).toString(),

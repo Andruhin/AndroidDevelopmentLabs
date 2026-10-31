@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
-        android:entries="@array/categories" />
+        />
   </LinearLayout>
 
   <!-- Група «Пріоритет»: заголовок, колір якого змінюється залежно від вибору -->
