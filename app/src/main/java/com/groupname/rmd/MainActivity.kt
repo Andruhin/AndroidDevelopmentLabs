@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
   val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
   { result ->
-    if (result.resultCode == Activity.RESULT_OK){
+    if (result.resultCode == Activity.RESULT_OK) {
       val task = result.data?.getStringExtra("key_task")
       if (!task.isNullOrBlank()) {
         taskList.add(task)
@@ -41,27 +41,20 @@ class MainActivity : AppCompatActivity() {
     list?.adapter = adapter
 
     // Додаємо розділювач між елементами
-    val divider = DividerItemDecoration(this,  layoutManager.orientation)
+    val divider = DividerItemDecoration(this, layoutManager.orientation)
     list?.addItemDecoration(divider)
 
     val btnAddTask = findViewById<Button>(R.id.btn_add)
 
     btnAddTask.setOnClickListener {
-      launchSecondActivityForResult()
+      launchAddTaskActivityForResult()
     }
   }
 
-  //Launch without waiting for result
-  private fun launchSecondActivity(text: String){
-    val intent = Intent(this, SecondActivity::class.java)
-    intent.putExtra("key_text", text)
-    startActivity(intent)
-  }
-
   //Launch with waiting for result
-  private fun launchSecondActivityForResult(){
-    val intent = Intent(this, SecondActivity::class.java)
-   launcher.launch(intent)
+  private fun launchAddTaskActivityForResult() {
+    val intent = Intent(this, AddTaskActivity::class.java)
+    launcher.launch(intent)
   }
 
 }

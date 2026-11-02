@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddTaskActivity"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+  <TextView
+      android:id="@+id/tv_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/add_task_title"
+      android:textSize="23sp"
+      android:layout_marginTop="48dp"
+      />
+
+  <com.google.android.material.textfield.TextInputLayout
+      android:id="@+id/til_title"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:hint="@string/task_name_hint"
+      android:layout_marginTop="16dp"
+      >
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginTop="16dp"
+      android:gravity="center_vertical"
+      >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category_label"
+        />
+
+    <Spinner
+        android:id="@+id/spinner_category"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        />
+
+  </LinearLayout>
+
+  <TextView
+      android:id="@+id/tv_priority_label"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/priority_label"
+      android:textSize="20sp"
+      android:layout_marginTop="16dp"
+      />
+
+  <RadioGroup
+      android:id="@+id/rg_priority"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:checkedButton="@id/rb_medium"
+      >
+    <RadioButton
+        android:id="@+id/rb_low"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/priority_low"
+        />
+    <RadioButton
+        android:id="@+id/rb_medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/priority_medium"
+        />
+    <RadioButton
+        android:id="@+id/rb_high"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/priority_high"
+        />
+  </RadioGroup>
+
+  <CheckBox
+      android:id="@+id/cb_location"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/attach_location"
+      android:layout_marginTop="16dp"
+      />
+
+  <TextView
+      android:id="@+id/tv_location_stub"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="@string/location_stub"
+      android:visibility="invisible"
+      />
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/btn_save"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="24dp"
+      android:text="@string/save_task"
+      />
+</LinearLayout>

@@ -7,6 +7,42 @@
     android:padding="16dp"
     >
   <ImageView
+      android:id="@+id/ic_priority"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:src="@drawable/ic_arrow_right_24dp"
+      />
+  <TextView
+      android:id="@+id/task_name"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginStart="16dp"
+      android:textSize="20sp"
+      app:layout_constraintBottom_toTopOf="@id/task_category"
+      app:layout_constraintEnd_toStartOf="@id/arrow"
+      app:layout_constraintStart_toEndOf="@id/ic_priority"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="Task title"
+      />
+ <TextView
+      android:id="@+id/task_category"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="16dp"
+      android:layout_marginStart="16dp"
+     android:layout_marginTop="4dp"
+     android:textSize="16sp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toStartOf="@id/arrow"
+      app:layout_constraintStart_toEndOf="@id/ic_priority"
+      app:layout_constraintTop_toBottomOf="@id/task_name"
+      tools:text="Home"
+      />
+  <ImageView
       android:id="@+id/arrow"
       android:layout_width="24dp"
       android:layout_height="24dp"
@@ -14,16 +50,5 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      />
-  <TextView
-      android:id="@+id/task_name"
-      android:layout_width="0dp"
-      android:layout_height="wrap_content"
-      android:layout_marginEnd="16dp"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toStartOf="@id/arrow"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      tools:text="Task 1"
       />
 </androidx.constraintlayout.widget.ConstraintLayout>

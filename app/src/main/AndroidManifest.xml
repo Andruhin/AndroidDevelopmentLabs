@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RMD" >
         <activity
-            android:name=".SecondActivity"
+            android:name=".AddTaskActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
