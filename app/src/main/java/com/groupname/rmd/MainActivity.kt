@@ -42,14 +42,14 @@ class MainActivity : AppCompatActivity() {
 
   //Launch without waiting for result
   private fun launchSecondActivity(text: String){
-    val intent = Intent(this, SecondActivity::class.java)
+    val intent = Intent(this, AddTaskActivity::class.java)
     intent.putExtra("key_text", text)
     startActivity(intent)
   }
 
   //Launch with waiting for result
   private fun launchSecondActivityForResult(text: String){
-    val intent = Intent(this, SecondActivity::class.java)
+    val intent = Intent(this, AddTaskActivity::class.java)
     intent.putExtra("key_text", text)
    launcher.launch(intent)
   }
