@@ -1,9 +1,13 @@
 package com.groupname.rmd
 
-import java.util.Date
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Task(
-  val id: Int,
-  val description: String,
-  val dateTime: String
-)
+  val id: String,
+  val title: String,
+  val category: TaskCategory,
+  val priority: TaskPriority,
+  val hasLocation: Boolean
+): Parcelable

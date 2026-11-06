@@ -21,9 +21,10 @@ class MainActivity : AppCompatActivity() {
 
   val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
   { result ->
-    if (result.resultCode == Activity.RESULT_OK){
-      val task = result.data?.getStringExtra("key_task")
-      if (!task.isNullOrBlank()) {
+    if (result.resultCode == Activity.RESULT_OK) {
+      val task = result.data?.getParcelableExtra<Task>(AddTaskActivity.KEY_NEW_TASK)
+
+      if (task != null) {
         taskList.add(task)
         storage.saveTaskList(taskList)
         adapter.setData(taskList)
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  private val taskList = mutableListOf<String>()
+  private val taskList = mutableListOf<Task>()
   private var list: RecyclerView? = null
   private val adapter: ListAdapter = ListAdapter()
 
@@ -57,27 +58,20 @@ class MainActivity : AppCompatActivity() {
     Log.d("task", task2.toString())
 
     // Додаємо розділювач між елементами
-    val divider = DividerItemDecoration(this,  layoutManager.orientation)
+    val divider = DividerItemDecoration(this, layoutManager.orientation)
     list?.addItemDecoration(divider)
 
     val btnAddTask = findViewById<Button>(R.id.btn_add)
 
     btnAddTask.setOnClickListener {
-      launchSecondActivityForResult()
+      launchAddTaskActivityForResult()
     }
   }
 
-  //Launch without waiting for result
-  private fun launchSecondActivity(text: String){
-    val intent = Intent(this, SecondActivity::class.java)
-    intent.putExtra("key_text", text)
-    startActivity(intent)
-  }
-
   //Launch with waiting for result
-  private fun launchSecondActivityForResult(){
-    val intent = Intent(this, SecondActivity::class.java)
-   launcher.launch(intent)
+  private fun launchAddTaskActivityForResult() {
+    val intent = Intent(this, AddTaskActivity::class.java)
+    launcher.launch(intent)
   }
 
 }

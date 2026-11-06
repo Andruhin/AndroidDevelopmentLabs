@@ -3,6 +3,7 @@ package com.groupname.rmd
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
@@ -10,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
 
   /** Внутрішня колекція обєктів - список з текстом задач **/
-  private val taskList = mutableListOf<String>()
+  private val taskList = mutableListOf<Task>()
 
   /** Метод який записує список задач і запускає їх відмалювання**/
-  fun setData(list: List<String>){
+  fun setData(list: List<Task>){
     taskList.clear()
     taskList.addAll(list)
     notifyDataSetChanged()
@@ -34,7 +35,7 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
     holder: TaskViewHolder,
     position: Int
   ) {
-    val task = taskList.getOrNull(position)
+    val task = taskList.get(position)
     holder.render(task)
   }
 
@@ -46,10 +47,19 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
   /** Клас контейнера одного елемента на екрані який вміє відмалювати один елемент **/
   class TaskViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
-    private val taskView: TextView? = view.findViewById<TextView>(R.id.task_name)
+    private val tvTaskTitle: TextView? = view.findViewById<TextView>(R.id.task_name)
+    private val tvTaskCategory: TextView? = view.findViewById<TextView>(R.id.task_category)
+    private val imageTaskPriority: ImageView? = view.findViewById<ImageView>(R.id.ic_priority)
 
-    fun render(task: String?){
-      taskView?.text = task
+    fun render(task: Task){
+      tvTaskTitle?.text = task.title
+      tvTaskCategory?.text = task.category.name
+      val icon = when(task.priority){
+        TaskPriority.Low -> R.drawable.ic_arrow_down_24dp
+        TaskPriority.Medium -> R.drawable.ic_arrow_right_24dp
+        TaskPriority.High -> R.drawable.ic_arrow_up_24dp
+      }
+      imageTaskPriority?.setImageResource(icon)
     }
   }
 
