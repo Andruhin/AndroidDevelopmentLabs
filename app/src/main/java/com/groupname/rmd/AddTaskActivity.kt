@@ -1,5 +1,7 @@
 package com.groupname.rmd
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -36,6 +38,7 @@ class AddTaskActivity : AppCompatActivity() {
 
     //setup spinner
     val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, TaskCategory.entries)
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
     categorySpinner.adapter = adapter
     categorySpinner.setSelection(TaskCategory.Other.ordinal)
 
@@ -86,9 +89,16 @@ class AddTaskActivity : AppCompatActivity() {
         priority = priority,
         hasLocation = hasLocation
       )
+      val intent = Intent()
+      intent.putExtra(KEY_NEW_TASK, task)
+      setResult(Activity.RESULT_OK, intent)
+      finish()
     }
 
 
   }
 
+  companion object {
+    const val KEY_NEW_TASK = "key new task"
+  }
 }

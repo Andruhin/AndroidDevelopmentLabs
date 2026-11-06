@@ -19,15 +19,16 @@ class MainActivity : AppCompatActivity() {
   val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult())
   { result ->
     if (result.resultCode == Activity.RESULT_OK) {
-      val task = result.data?.getStringExtra("key_task")
-      if (!task.isNullOrBlank()) {
+      val task = result.data?.getParcelableExtra<Task>(AddTaskActivity.KEY_NEW_TASK)
+
+      if (task != null) {
         taskList.add(task)
         adapter.setData(taskList)
       }
     }
   }
 
-  private val taskList = mutableListOf<String>()
+  private val taskList = mutableListOf<Task>()
   private var list: RecyclerView? = null
   private val adapter: ListAdapter = ListAdapter()
 
