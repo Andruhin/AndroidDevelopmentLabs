@@ -27,16 +27,12 @@ class Storage(val context: Context) {
   }
 
   fun saveTask(task: Task){
-    appData = appData?.copy(
-      tasks = appData?.tasks?.toMutableList()?.apply { add(task) }.orEmpty()
-    )
+    appData?.tasks?.add(task)
     saveData(appData)
   }
 
   fun deleteTask(taskId: String){
-    appData = appData?.copy(
-      tasks = appData?.tasks?.toMutableList()?.apply { removeAll{ it.id == taskId} }.orEmpty()
-    )
+    appData?.tasks?.removeAll{ it.id == taskId }
     saveData(appData)
   }
 
@@ -46,7 +42,7 @@ class Storage(val context: Context) {
 
 
   data class AppData(
-    val tasks: List<Task> = emptyList(),
+    val tasks: MutableList<Task> = mutableListOf(),
     //todo other settings
   )
 
