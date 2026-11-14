@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -22,24 +23,45 @@ class MainActivity : AppCompatActivity() {
       val task = result.data?.getParcelableExtra<Task>(AddTaskActivity.KEY_NEW_TASK)
 
       if (task != null) {
-        taskList.add(task)
-        adapter.setData(taskList)
+        storage.saveTask(task)
+        adapter.setData(storage.getTasks())
       }
     }
   }
 
-  private val taskList = mutableListOf<Task>()
   private var list: RecyclerView? = null
   private val adapter: ListAdapter = ListAdapter()
+  private lateinit var storage: Storage
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
+    storage = Storage(this)
+
     list = findViewById<RecyclerView>(R.id.list)
     val layoutManager = LinearLayoutManager(this)
     list?.layoutManager = layoutManager
     list?.adapter = adapter
+    adapter.setData(storage.getTasks())
+
+    val swipeCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT){
+      override fun onMove(
+        p0: RecyclerView,
+        p1: RecyclerView.ViewHolder,
+        p2: RecyclerView.ViewHolder
+      ): Boolean {
+        return false
+      }
+
+      override fun onSwiped(viewHolder: RecyclerView.ViewHolder, p1: Int) {
+        val position = viewHolder.bindingAdapterPosition
+        if (position == RecyclerView.NO_POSITION) return
+        val deletedTask = adapter.removeAt(position)
+        storage.deleteTask(deletedTask.id)
+      }
+    }
+    ItemTouchHelper(swipeCallback).attachToRecyclerView(list)
 
     // Додаємо розділювач між елементами
     val divider = DividerItemDecoration(this, layoutManager.orientation)

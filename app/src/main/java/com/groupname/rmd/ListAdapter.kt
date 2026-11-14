@@ -44,6 +44,12 @@ class ListAdapter: RecyclerView.Adapter<ListAdapter.TaskViewHolder>() {
     return taskList.size
   }
 
+  fun removeAt(position: Int): Task {
+    val deletedTask = taskList.removeAt(position)
+    notifyItemRemoved(position)
+    return deletedTask
+  }
+
   /** Клас контейнера одного елемента на екрані який вміє відмалювати один елемент **/
   class TaskViewHolder(val view: View): RecyclerView.ViewHolder(view){
 
